@@ -406,8 +406,14 @@ TEST_P(SequentialCompressionWriterTest, writer_sets_threads_priority)
   const uint64_t kCompressionQueueSize = GetParam();
 #ifndef _WIN32
   const int32_t wanted_thread_priority = 10;
+  errno = 0;
+  int cur_nice_value = getpriority(PRIO_PROCESS, 0);
+  ASSERT_TRUE(!(cur_nice_value == -1 && errno != 0));
 #else
-  const int32_t wanted_thread_priority = THREAD_MODE_BACKGROUND_BEGIN;
+  const int32_t wanted_thread_priority = THREAD_PRIORITY_LOWEST;
+  auto current_thread_priority = GetThreadPriority(GetCurrentThread());
+  ASSERT_NE(current_thread_priority, THREAD_PRIORITY_ERROR_RETURN);
+  ASSERT_NE(current_thread_priority, wanted_thread_priority);
 #endif
 
   // queue size should be 0 or at least the number of remaining messages to prevent message loss
