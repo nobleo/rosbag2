@@ -44,7 +44,7 @@ TEST_F(RecordIntegrationTestFixture, topic_types_option)
   pub_manager.setup_publisher(string_topic_name, string_message, 2);
 
   rosbag2_transport::RecordOptions record_options =
-  {false, false, false, {}, {"test_msgs/msg/Arrays"}, {}, {}, {}, "rmw_format", 100ms};
+  {false, false, false, {}, {"test_msgs/msg/Arrays"}, {}, {}, {}, {}, "rmw_format", 100ms};
 
   auto recorder = std::make_shared<rosbag2_transport::Recorder>(
     std::move(writer_), storage_options_, record_options);
@@ -92,7 +92,7 @@ TEST_F(RecordIntegrationTestFixture, all_overrides_topic_types)
   pub_manager.setup_publisher(string_topic_name, string_message, 2);
 
   rosbag2_transport::RecordOptions record_options =
-  {true, false, false, {}, {"test_msgs/msg/Arrays"}, {}, {}, {}, "rmw_format", 100ms};
+  {true, false, false, {}, {"test_msgs/msg/Arrays"}, {}, {}, {}, {}, "rmw_format", 100ms};
 
   auto recorder = std::make_shared<rosbag2_transport::Recorder>(
     std::move(writer_), storage_options_, record_options);
